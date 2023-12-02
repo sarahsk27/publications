@@ -9,13 +9,25 @@
 # controls = dataset of all controls (non-cases)
 # seer_inc_mort = dataset of annual age-specific breast cancer incidence from SEER data in 2008-2012 and age-specific all-cause mortality data from CDC WONDER database in 2008-2012
 # Status = case-control status (0: control, 1: case)
+# famhxBC = family history in first-degree relative (0: no, 1: yes)
 # age = age at reference date
 # max age = 80 years in this analysis
 # inc = marginal age-specific incidence of breast cancer 
 # mort = age-specific all-cause mortality rate
 
 
-#### Formula ####
+#### Formula to calculate relative risks ####
+
+# Each Beta is a parameter estimate corresponding to a variable in the predictive model
+
+# Example for carriers of a pathogenic variant in a gene other than BRCA1 or BRCA2 (ATM carrier as an example):
+# logRR_G.ERS.PRS = Beta_ATM + Beta_logERS * logERS + Beta_PRS * PRS + Beta_PRS.AgeDecade.interaction * PRS * AgeDecade + Beta_PRS.logERS.interaction * PRS * logERS + Beta_famhxBC * famhxBC
+
+# Example for carriers of a pathogenic variant in BRCA1 or BRCA2 (BRCA2 carrier as an example):
+# logRR_G.ERS.PRS = Beta_BRCA2 + Beta_logERS * logERS + Beta_PRS * PRS + Beta_BRCA2.AgeDecade.interaction *  AgeDecade + Beta_PRS.BRCA2.interaction * PRS + Beta_PRS.AgeDecade.interaction * PRS * AgeDecade + Beta_PRS.logERS.interaction * PRS * logERS + Beta_famhxBC * famhxBC
+
+
+#### Formula to calculate absolute risks ####
 
 # LifetimeAbsoluteRisk(G,ERS,PRS) = (annual age-specific incidence/(avgRR_G.ERS.PRS.controls)) * RR_G.ERS.PRS * (1- probability diagnosed at age 0) * (1-probability diagnosed at age 1) * ... * (1-probability diagnosed at max age)
 
